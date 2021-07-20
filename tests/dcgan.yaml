@@ -1,0 +1,128 @@
+architecture:
+  generator:
+    - tconv:
+        in_channels: 100
+        out_channels: 512
+        kernel_size: [4,4]
+        stride: 1
+        padding: 0
+        bias: False
+      bn:
+      act:
+        type: 'ReLU'
+        params:
+          inplace: True
+    - tconv:
+        in_channels: 512
+        out_channels: 256
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      bn:
+      act:
+        type: 'ReLU'
+        params:
+          inplace: True
+    - tconv:
+        in_channels: 256
+        out_channels: 128
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      bn:
+      act:
+        type: 'ReLU'
+        params:
+          inplace: True
+    - tconv:
+        in_channels: 128
+        out_channels: 64
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      bn:
+      act:
+        type: 'ReLU'
+        params:
+          inplace: True
+    - tconv:
+        in_channels: 64
+        out_channels: 3
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      bn:
+      act:
+        type: 'Tanh'
+        params:
+  discriminator:
+    - conv:
+        in_channels: 3
+        out_channels: 64
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      act:
+        type: 'LeakyReLU'
+        params:
+          negative_slope: 0.2
+          inplace: True
+    - conv:
+        in_channels: 64
+        out_channels: 128
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      act:
+        type: 'LeakyReLU'
+        params:
+          negative_slope: 0.2
+          inplace: True
+    - conv:
+        in_channels: 128
+        out_channels: 256
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      act:
+        type: 'LeakyReLU'
+        params:
+          negative_slope: 0.2
+          inplace: True
+    - conv:
+        in_channels: 256
+        out_channels: 512
+        kernel_size: [4,4]
+        stride: 2
+        padding: 1
+        bias: False
+      act:
+        type: 'LeakyReLU'
+        params:
+          negative_slope: 0.2
+          inplace: True
+    - conv:
+        in_channels: 512
+        out_channels: 1
+        kernel_size: [4,4]
+        stride: 1
+        padding: 0
+        bias: False
+      act:
+        type: 'Sigmoid'
+        params:
+
+training:
+  seed: 999
+  batchSize: 128
+  imageSize: [64,64]
+  epochs: 20
+  learningRate: 2e-4
+  beta1: 0.5
