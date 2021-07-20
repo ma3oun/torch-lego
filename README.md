@@ -55,6 +55,6 @@ architecture:
 # Installation and test
 This is a python package that can be installed using pip after cloning the repository:
 ```bash
-pip install -e torch-lego
+pip install -e torch_lego
 ```
 All tests can be run by executing the *all.sh* script in the *tests* directory.
