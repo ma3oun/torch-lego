@@ -158,7 +158,9 @@ def run(runParams: dict) -> float:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Anomaly detection trainer")
+    parser = argparse.ArgumentParser(
+        description="Deep convolutional classifier for MNIST"
+    )
     parser.add_argument(
         "configuration", type=str, default=None, help="Configuration file"
     )

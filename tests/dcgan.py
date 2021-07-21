@@ -181,7 +181,9 @@ def run(runParams: dict):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Anomaly detection trainer")
+    parser = argparse.ArgumentParser(
+        description="DCGAN (inspired from official PyTorch example)"
+    )
     parser.add_argument(
         "configuration", type=str, default=None, help="Configuration file"
     )
