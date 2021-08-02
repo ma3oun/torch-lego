@@ -21,6 +21,8 @@ class ConvModuleBase(LegoModule):
             conv = getattr(nn, f"Conv{self.dim}d")
             tconv = getattr(nn, f"ConvTranspose{self.dim}d")
             bn = getattr(nn, f"BatchNorm{self.dim}d")
+            ins_n = getattr(nn, f"InstanceNorm{self.dim}d")
+            ln = nn.LayerNorm
             apool = getattr(nn, f"AvgPool{self.dim}d")
             mpool = getattr(nn, f"MaxPool{self.dim}d")
             if self.dim > 1:
@@ -33,10 +35,14 @@ class ConvModuleBase(LegoModule):
                 self.__setattr__(f"tconv_{idx}", tconv(**layerParams[layerTypeKey]))
             if "bn" in layerParams.keys():
                 self.__setattr__(
-                    f"coderBN_{idx}", bn(layerParams[layerTypeKey]["out_channels"])
+                    f"coderN_{idx}", bn(layerParams[layerTypeKey]["out_channels"])
                 )
-            else:
-                self.__setattr__(f"coderBN_{idx}", nn.Identity())
+            elif "in" in layerParams.keys():
+                self.__setattr__(
+                    f"coderN_{idx}", ins_n(layerParams[layerTypeKey]["out_channels"])
+                )
+            else: 
+                self.__setattr__(f"coderN_{idx}", nn.Identity())
             if "apool" in layerParams.keys():
                 self.__setattr__(f"apool_{idx}", apool(**layerParams["apool"]))
             else:
@@ -69,7 +75,7 @@ class ConvModuleBase(LegoModule):
                 y = self.__getattr__(f"tconv_{idx}")(y)
             y = self.__getattr__(f"apool_{idx}")(y)
             y = self.__getattr__(f"mpool_{idx}")(y)
-            y = self.__getattr__(f"coderBN_{idx}")(y)
+            y = self.__getattr__(f"coderN_{idx}")(y)
             y = self.__getattr__(f"coderAct_{idx}")(y)
             y = self.__getattr__(f"drpt_{idx}")(y)
         return y

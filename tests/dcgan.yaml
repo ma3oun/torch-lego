@@ -7,7 +7,7 @@ architecture:
         stride: 1
         padding: 0
         bias: False
-      bn:
+      bn: #use 'in' for Instance norm
       act:
         type: 'ReLU'
         params:

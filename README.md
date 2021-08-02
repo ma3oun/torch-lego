@@ -1,6 +1,6 @@
 # torch-lego
 Build pytorch modules using yaml description files. Yaml can be used to keep track of model architecture using tools such as Mlflow.
-This library supports convolution (1d, 2d and 3d) modules, transpose convolution (1d,2d,3d) modules and linear modules. Average and max pooling layers are also supported as well as fully connected layers. Batch norm, dropout and all built-in PyTorch activations are available. See the examples in the test directory for more detail.
+This library supports convolution (1d, 2d and 3d) modules, transpose convolution (1d,2d,3d) modules and linear modules. Average and max pooling layers are also supported as well as fully connected layers. Batch/Layer/Instance norm, dropout and all built-in PyTorch activations are available. See the examples in the test directory for more detail.
 
 # Example
 ## Deep convolutional classifier

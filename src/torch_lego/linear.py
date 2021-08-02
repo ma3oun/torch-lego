@@ -26,10 +26,18 @@ class LinearModule(LegoModule):
             self.__setattr__(f"act_{idx-1}", actLayer)
             if "bn" in currentParams.keys():
                 self.__setattr__(
-                    f"bn_{idx}", nn.BatchNorm1d(currentParams["out_features"])
+                    f"n_{idx-1}", nn.BatchNorm1d(currentParams["out_features"])
+                )
+            elif "ln" in currentParams.keys():
+                self.__setattr__(
+                    f"n_{idx-1}", nn.LayerNorm(currentParams["out_features"])
+                )
+            elif "in" in currentParams.keys():
+                self.__setattr__(
+                    f"n_{idx-1}", nn.InstanceNorm1d(currentParams["out_features"])
                 )
             else:
-                self.__setattr__(f"bn_{idx-1}", nn.Identity())
+                self.__setattr__(f"n_{idx-1}", nn.Identity())
             if "drpt" in currentParams.keys():
                 p = currentParams["drpt"]
                 self.__setattr__(f"drpt_{idx-1}", nn.Dropout(p=p))
@@ -43,7 +51,7 @@ class LinearModule(LegoModule):
         try:
             for idx in range(self.nLayers):
                 y = self.__getattr__(f"dense_{idx}")(y)
-                y = self.__getattr__(f"bn_{idx}")(y)
+                y = self.__getattr__(f"n_{idx}")(y)
                 y = self.__getattr__(f"act_{idx}")(y)
                 y = self.__getattr__(f"drpt_{idx}")(y)
         except RuntimeError as e:

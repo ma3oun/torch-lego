@@ -30,6 +30,7 @@ architecture:
         type: 'ReLU'
         params:
       drpt: 0.4
+      ln: # Layer norm
     - out_features: 100
       act:
         type: 'ReLU'
